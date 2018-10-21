@@ -5,13 +5,18 @@
 # Version: 0.0.1
 
 
+
+# CONFIGS ############################
+
+YOUNG_CARD_IVL = 21
+INCLUDE_FILTERED_DECKS = True
+
+# END CONFIGS ########################
+
+
 from aqt import mw
 from anki.hooks import wrap
 from anki.sched import Scheduler
-# from aqt.utils import showWarning, showText, getText, tooltip
-
-
-YOUNG_CARD_IVL = 21
 
 
 ## MONKEY PATCHES ##
@@ -23,9 +28,13 @@ def deckNewLimitSingle(self, d, _old):
     youngMax = c.get("young_card_limit", 0)
     if youngMax==0 or newMax==0: return newMax
 
+    sql_odid=''
+    if INCLUDE_FILTERED_DECKS:
+        sql_odid='or odid=%d'%d['id']
+
     cnt = self.col.db.first("""select 
 sum(case when queue > 0 and ivl < ? then 1 else 0 end)
-from cards where did=?""", YOUNG_CARD_IVL, d['id'])
+from cards where did=? %s"""%sql_odid, YOUNG_CARD_IVL, d['id'])
 
     youngCnt =  cnt[0] or 0
     paddingCnt = max(0, youngMax-youngCnt-d['newToday'][1])
@@ -67,7 +76,7 @@ def dconfsetupUi(self, Dialog):
     #ShowAnswer Timeout limit
     self.young_card_label = QtWidgets.QLabel(self.tab_3)
     self.young_card_label.setObjectName(_fromUtf8("young_card_label"))
-    self.young_card_label.setText(_("Max Young Cards:"))
+    self.young_card_label.setText(_("New/Young Cards:"))
     self.gridLayout.addWidget(self.young_card_label, r, 0, 1, 1)
     self.young_card_limit = QtWidgets.QSpinBox(self.tab_3)
     self.young_card_limit.setMinimum(0)
