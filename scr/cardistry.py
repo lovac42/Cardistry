@@ -2,21 +2,24 @@
 # Copyright: (C) 2018 Lovac42
 # Support: https://github.com/lovac42/Cardistry
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-# Version: 0.0.2
+# Version: 0.0.3
 
 
-
-# CONFIGS ############################
+# == User Config =========================================
 
 YOUNG_CARD_IVL = 21
+
 INCLUDE_FILTERED_DECKS = True
 
-# END CONFIGS ########################
+
+# == End Config ==========================================
+##########################################################
 
 
 from aqt import mw
 from anki.hooks import wrap
-from anki.sched import Scheduler
+from anki import version
+ANKI21 = version.startswith("2.1.")
 
 
 ## MONKEY PATCHES ##
@@ -41,7 +44,11 @@ from cards where did=? %s"""%sql_odid, YOUNG_CARD_IVL, d['id'])
     return min(newMax, paddingCnt)
 
 
-Scheduler._deckNewLimitSingle = wrap(Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
+import anki.sched
+anki.sched.Scheduler._deckNewLimitSingle = wrap(anki.sched.Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
+if ANKI21:
+    import anki.schedv2
+    anki.schedv2.Scheduler._deckNewLimitSingle = wrap(anki.schedv2.Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
 
 
 
