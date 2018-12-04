@@ -2,7 +2,7 @@
 # Copyright: (C) 2018 Lovac42
 # Support: https://github.com/lovac42/Cardistry
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-# Version: 0.0.3
+# Version: 0.0.4
 
 
 # == User Config =========================================
@@ -17,14 +17,16 @@ INCLUDE_FILTERED_DECKS = True
 
 
 from aqt import mw
-from anki.hooks import wrap
+from anki.hooks import wrap, addHook
 from anki import version
-ANKI21 = version.startswith("2.1.")
+ANKI21=version.startswith("2.1.")
+on_sync=False
 
 
 ## MONKEY PATCHES ##
 def deckNewLimitSingle(self, d, _old):
     if d['dyn']: return self.reportLimit
+    if on_sync: return _old(self,d)
 
     c=self.col.decks.confForDid(d['id'])
     newMax = max(0, c['new']['perDay'] - d['newToday'][1])
@@ -49,6 +51,16 @@ anki.sched.Scheduler._deckNewLimitSingle = wrap(anki.sched.Scheduler._deckNewLim
 if ANKI21:
     import anki.schedv2
     anki.schedv2.Scheduler._deckNewLimitSingle = wrap(anki.schedv2.Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
+
+
+#This fixes sync errors
+def onSync(type):
+    global on_sync
+    if type=='finalize':
+        on_sync=False
+    else:
+        on_sync=True
+addHook('sync',onSync)
 
 
 
