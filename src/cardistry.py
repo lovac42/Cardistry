@@ -2,7 +2,7 @@
 # Copyright: (C) 2018 Lovac42
 # Support: https://github.com/lovac42/Cardistry
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-# Version: 0.0.4
+# Version: 0.0.5
 
 
 # == User Config =========================================
@@ -53,15 +53,16 @@ if ANKI21:
     anki.schedv2.Scheduler._deckNewLimitSingle = wrap(anki.schedv2.Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
 
 
-#This fixes sync errors
-def onSync(type):
+#This monitor sync start/stops
+oldSync=anki.sync.Syncer.sync
+def onSync(self):
     global on_sync
-    if type=='finalize':
-        on_sync=False
-    else:
-        on_sync=True
-addHook('sync',onSync)
+    on_sync=True
+    ret=oldSync(self)
+    on_sync=False
+    return ret
 
+anki.sync.Syncer.sync=onSync
 
 
 ##################################################
