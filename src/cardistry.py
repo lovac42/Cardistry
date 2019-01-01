@@ -2,7 +2,7 @@
 # Copyright: (C) 2018 Lovac42
 # Support: https://github.com/lovac42/Cardistry
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-# Version: 0.0.6
+# Version: 0.0.7
 
 
 # == User Config =========================================
@@ -24,11 +24,11 @@ on_sync=False
 
 
 ## MONKEY PATCHES ##
-def deckNewLimitSingle(self, d, _old):
-    if d['dyn']: return self.reportLimit
-    if on_sync: return _old(self,d)
+def deckNewLimitSingle(sched, d, _old):
+    if d['dyn']: return sched.reportLimit
+    if on_sync: return _old(sched,d)
 
-    c=self.col.decks.confForDid(d['id'])
+    c=sched.col.decks.confForDid(d['id'])
     newMax = max(0, c['new']['perDay'] - d['newToday'][1])
     youngMax = c.get("young_card_limit", 0)
     if youngMax==0 or newMax==0: return newMax
@@ -37,13 +37,16 @@ def deckNewLimitSingle(self, d, _old):
     if INCLUDE_FILTERED_DECKS:
         sql_odid='or odid=%d'%d['id']
 
-    cnt = self.col.db.first("""select 
+    cnt = sched.col.db.first("""select 
 sum(case when queue > 0 and ivl < ? then 1 else 0 end)
 from cards where did=? %s"""%sql_odid, YOUNG_CARD_IVL, d['id'])
 
     youngCnt =  cnt[0] or 0
     paddingCnt = max(0, youngMax-youngCnt-d['newToday'][1])
-    return min(newMax, paddingCnt)
+
+    penetration=min(newMax, paddingCnt)
+    print(str(d['id'])+';;'+str(penetration)+';;'+d['name']) #debug: print to cvs
+    return penetration
 
 
 import anki.sched
