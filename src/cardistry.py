@@ -45,7 +45,7 @@ from cards where did=? %s"""%sql_odid, YOUNG_CARD_IVL, d['id'])
     paddingCnt = max(0, youngMax-youngCnt-d['newToday'][1])
 
     penetration=min(newMax, paddingCnt)
-    print(str(d['id'])+';;'+str(penetration)+';;'+d['name']) #debug: print to cvs
+    # print(str(d['id'])+';;'+str(penetration)+';;'+d['name']) #debug: dynamically changes on reset
     return penetration
 
 
