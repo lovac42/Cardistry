@@ -2,7 +2,7 @@
 # Copyright: (C) 2018 Lovac42
 # Support: https://github.com/lovac42/Cardistry
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
-# Version: 0.0.5
+# Version: 0.0.6
 
 
 # == User Config =========================================
@@ -92,8 +92,6 @@ except AttributeError:
 
 def dconfsetupUi(self, Dialog):
     r=self.gridLayout.rowCount()
-
-    #ShowAnswer Timeout limit
     self.young_card_label = QtWidgets.QLabel(self.tab_3)
     self.young_card_label.setObjectName(_fromUtf8("young_card_label"))
     self.young_card_label.setText(_("New/Young Cards:"))
