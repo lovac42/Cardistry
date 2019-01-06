@@ -8,3 +8,5 @@ Enable using deck menu options.
 
 0 = disable  
 200 = about 10 young cards daily (200/20, that is 200 young/learning/new cards spread across 20 days).
+
+Please note that parent's new card limit must be larger than child's subdeck limit as Anki enforces parent deck limits first.
