@@ -1,12 +1,13 @@
-# Cardistry
-Anki Addon: Dynamically Add New Cards
+# Cardistry: Dynamically Add New Cards
 
-This addon will calculate how many young and learning cards are outstanding in a given 20 days period and add new cards as they mature or lapse. It ensure that a user will not be juggling more than (n) amount of young/learning cards in a given period in the deck that uses the options group.
+## About:
+This addon adjusts how many new card will be dealt out during review depending on the current outstanding number of young and learning cards in a given deck. It will increase or decrease the daily limit as cards matures or lapses. This ensures that a user will not be juggling more than (n) amount of young/learning cards in a given period.
 
-# Configs:
-Enable using deck menu options.  
-
-0 = disable  
-200 = about 10 young cards daily (200/20, that is 200 young/learning/new cards spread across 20 days).
 
 Please note that parent's new card limit must be larger than child's subdeck limit as Anki enforces parent deck limits first.
+
+
+## Configs:
+Enable using deck menu options.  
+
+<img src="https://github.com/lovac42/Cardistry/blob/master/screenshots/deckmenu.png?raw=true">
