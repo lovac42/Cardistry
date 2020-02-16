@@ -4,22 +4,12 @@
 # License: GNU GPL, version 3 or later; http://www.gnu.org/copyleft/gpl.html
 
 
-# == User Config =========================================
-
-# Replaced with GUI elements.
-# Check deck options
-
-# == End Config ==========================================
-##########################################################
-
-
 from aqt import mw
 from anki.hooks import wrap, addHook
 from anki.utils import ids2str
 
 from anki import version
 ANKI21=version.startswith("2.1.")
-on_sync=False
 
 
 def getYoungCardCnt(did, mIvl, incFilter):
@@ -37,7 +27,7 @@ and ivl < ? and (did = ? %s)
 ## MONKEY PATCHES ##
 def deckNewLimitSingle(sched, d, _old):
     newMax=_old(sched,d)
-    if on_sync or d['dyn']:
+    if d['dyn'] or mw.state == "sync":
         return newMax
 
     c=sched.col.decks.confForDid(d['id'])
@@ -62,16 +52,6 @@ if ANKI21:
     anki.schedv2.Scheduler._deckNewLimitSingle = wrap(anki.schedv2.Scheduler._deckNewLimitSingle, deckNewLimitSingle, 'around')
 
 
-#This monitor sync start/stops
-oldSync=anki.sync.Syncer.sync
-def onSync(self):
-    global on_sync
-    on_sync=True
-    ret=oldSync(self)
-    on_sync=False
-    return ret
-
-anki.sync.Syncer.sync=onSync
 
 
 ##################################################
