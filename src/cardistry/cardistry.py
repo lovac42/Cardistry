@@ -65,10 +65,10 @@ import aqt.deckconf
 from anki.lang import _
 from aqt.qt import *
 
-if ANKI21:
-    from PyQt5 import QtCore, QtGui, QtWidgets
-else:
+try:
     from PyQt4 import QtCore, QtGui as QtWidgets
+except:
+    from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 def getNewCardCnt(did, incFilter):
