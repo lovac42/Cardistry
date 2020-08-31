@@ -2,6 +2,7 @@
 	"scan_options": {
         "matured_ivl": 21,
         "scan_days": 5,
-        "scan_ease": 4000
+        "scan_ease": 4000,
+        "inc_filtered_decks": false
     }
 }

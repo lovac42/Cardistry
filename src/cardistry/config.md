@@ -15,3 +15,7 @@ Set to 9999 to remove limit.
 All ease values equal to or below this value will be counted as difficult.  
 Default starting ease is set to 2500.  
 Set to 9999 to remove limit.
+
+## inc_filtered_decks:
+true or false (lower cased letters).  
+Cards moved to a filtered deck uses different id's and will screw the calculations.

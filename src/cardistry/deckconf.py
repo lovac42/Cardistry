@@ -36,12 +36,12 @@ def valuechange(self):
     if lim:
         cur=mw.col.decks.current()
         # ivl=self.cardistry_ivl.value()
-        fil=self.cardistry_filter.checkState()
-        yCnt=getYoungCardCnt(cur['id'], fil)
+        # fil=self.cardistry_filter.checkState()
+        yCnt=getYoungCardCnt(cur['id'])
 
         if yCnt:
             pLim=getParentLim(cur)
-            nCnt=getNewCardCnt(cur['id'],fil)
+            nCnt=getNewCardCnt(cur['id'])
             npd=self.newPerDay.value()
 
             cpd=min(pLim,npd,max(0,lim-yCnt))
@@ -51,10 +51,10 @@ def valuechange(self):
             msg="Done! or is a parent deck"
 
         # self.cardistry_ivl.setDisabled(False)
-        self.cardistry_filter.setDisabled(False)
-    else:
+        # self.cardistry_filter.setDisabled(False)
+    # else:
         # self.cardistry_ivl.setDisabled(True)
-        self.cardistry_filter.setDisabled(True)
+        # self.cardistry_filter.setDisabled(True)
     self.young_card_msg.setText(_(msg))
 
 
@@ -90,10 +90,10 @@ def dconfsetupUi(self, Dialog):
     # self.cardistry_ivl.valueChanged.connect(lambda:valuechange(self))
     # self.gridLayout.addWidget(self.cardistry_ivl,r,1,1,1)
 
-    self.cardistry_filter=QtWidgets.QCheckBox(self.tab)
-    self.cardistry_filter.setText(_('count cards in filter decks?'))
-    self.cardistry_filter.clicked.connect(lambda:valuechange(self))
-    self.gridLayout.addWidget(self.cardistry_filter,r,2,1,3)
+    # self.cardistry_filter=QtWidgets.QCheckBox(self.tab)
+    # self.cardistry_filter.setText(_('count cards in filter decks?'))
+    # self.cardistry_filter.clicked.connect(lambda:valuechange(self))
+    # self.gridLayout.addWidget(self.cardistry_filter,r,2,1,3)
 
 
 def loadConf(self):
@@ -101,8 +101,8 @@ def loadConf(self):
     self.form.young_card_limit.setValue(lim)
     # lim=self.conf.get("cardistry_ivl", 21)
     # self.form.cardistry_ivl.setValue(lim)
-    cb=self.conf.get("cardistry_filter", 0)
-    self.form.cardistry_filter.setCheckState(cb)
+    # cb=self.conf.get("cardistry_filter", 0)
+    # self.form.cardistry_filter.setCheckState(cb)
     valuechange(self.form)
 
 
@@ -110,7 +110,7 @@ def saveConf(self):
     valuechange(self.form)
     self.conf['young_card_limit']=self.form.young_card_limit.value()
     # self.conf['cardistry_ivl']=self.form.cardistry_ivl.value()
-    self.conf['cardistry_filter']=self.form.cardistry_filter.checkState()
+    # self.conf['cardistry_filter']=self.form.cardistry_filter.checkState()
 
 
 aqt.forms.dconf.Ui_Dialog.setupUi = wrap(

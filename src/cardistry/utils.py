@@ -8,7 +8,7 @@ from aqt import mw
 from .setting import settings
 
 
-def getYoungCardCnt(did, incFilter):
+def getYoungCardCnt(did):
     "count lrn or burried only, no suspended"
 
     opts = settings.conf.get("scan_options", {})
@@ -17,6 +17,7 @@ def getYoungCardCnt(did, incFilter):
     scan_ease = opts.get("scan_ease", 4000)
     matured_ivl = opts.get("matured_ivl", 21)
 
+    incFilter = opts.get("inc_filtered_decks", False)
     sql_odid='or odid = %d'%did if incFilter else ''
 
     cnt=mw.col.db.first("""
@@ -31,9 +32,11 @@ matured_ivl, scan_days, scan_ease, did)[0]
 
 
 
-def getNewCardCnt(did, incFilter):
+def getNewCardCnt(did):
     "count new or burried only, no suspended"
 
+    opts = settings.conf.get("scan_options", {})
+    incFilter = opts.get("inc_filtered_decks", False)
     sql_odid='or odid = %d'%did if incFilter else ''
 
     cnt=mw.col.db.first("""
