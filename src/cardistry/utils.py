@@ -27,3 +27,18 @@ and (did = ? %s)"""%sql_odid,
 matured_ivl, scan_days, scan_ease, did)[0]
 
     return cnt or 0
+
+
+
+
+def getNewCardCnt(did, incFilter):
+    "count new or burried only, no suspended"
+
+    sql_odid='or odid = %d'%did if incFilter else ''
+
+    cnt=mw.col.db.first("""
+Select count() from cards where
+type = 0 and queue in (0,-2,-3)
+and (did = ? %s)"""%sql_odid,did)[0]
+
+    return cnt or 0

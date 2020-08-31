@@ -12,22 +12,12 @@ from anki.lang import _
 from aqt.qt import *
 
 from .lib.com.lovac42.anki.version import ANKI20, CCBC
-from .utils import getYoungCardCnt
+from .utils import getYoungCardCnt, getNewCardCnt
 
 if ANKI20 or CCBC:
     from PyQt4 import QtCore, QtGui as QtWidgets
 else:
     from PyQt5 import QtCore, QtGui, QtWidgets
-
-
-def getNewCardCnt(did, incFilter):
-    "count new or burried only, no suspended"
-    sql_odid='or odid = %d'%did if incFilter else ''
-    cnt=mw.col.db.first("""
-Select count() from cards where
-type = 0 and queue in (0,-2,-3)
-and (did = ? %s)"""%sql_odid,did)[0]
-    return cnt or 0
 
 
 def getParentLim(deck):
