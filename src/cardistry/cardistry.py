@@ -23,8 +23,8 @@ def deckNewLimitSingle(sched, d, _old):
         return newMax
 
     incFilter=c.get("cardistry_filter", 0)
-    mIvl=c.get("cardistry_ivl", 21)
-    youngCnt=getYoungCardCnt(d['id'], mIvl, incFilter)
+    # mIvl=c.get("cardistry_ivl", 21)
+    youngCnt=getYoungCardCnt(d['id'], incFilter)
 
     paddingCnt=max(0,youngMax-youngCnt-d['newToday'][1])
     penetration=min(newMax, paddingCnt)

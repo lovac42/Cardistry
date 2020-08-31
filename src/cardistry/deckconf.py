@@ -45,9 +45,9 @@ def valuechange(self):
     lim=self.young_card_limit.value()
     if lim:
         cur=mw.col.decks.current()
-        ivl=self.cardistry_ivl.value()
+        # ivl=self.cardistry_ivl.value()
         fil=self.cardistry_filter.checkState()
-        yCnt=getYoungCardCnt(cur['id'], ivl, fil)
+        yCnt=getYoungCardCnt(cur['id'], fil)
 
         if yCnt:
             pLim=getParentLim(cur)
@@ -60,10 +60,10 @@ def valuechange(self):
         else:
             msg="Done! or is a parent deck"
 
-        self.cardistry_ivl.setDisabled(False)
+        # self.cardistry_ivl.setDisabled(False)
         self.cardistry_filter.setDisabled(False)
     else:
-        self.cardistry_ivl.setDisabled(True)
+        # self.cardistry_ivl.setDisabled(True)
         self.cardistry_filter.setDisabled(True)
     self.young_card_msg.setText(_(msg))
 
@@ -80,7 +80,7 @@ def dconfsetupUi(self, Dialog):
     self.young_card_limit=QtWidgets.QSpinBox(self.tab)
     self.young_card_limit.setMinimum(0)
     self.young_card_limit.setMaximum(9999)
-    self.young_card_limit.setSingleStep(5)
+    self.young_card_limit.setSingleStep(1)
     self.gridLayout.addWidget(self.young_card_limit,r,1,1,1)
 
     self.newPerDay.valueChanged.connect(lambda:valuechange(self))
@@ -93,12 +93,12 @@ def dconfsetupUi(self, Dialog):
     label.setText(_("Mature IVL:"))
     self.gridLayout.addWidget(label,r,0,1,1)
 
-    self.cardistry_ivl=QtWidgets.QSpinBox(self.tab)
-    self.cardistry_ivl.setMinimum(1)
-    self.cardistry_ivl.setMaximum(999)
-    self.cardistry_ivl.setSingleStep(1)
-    self.cardistry_ivl.valueChanged.connect(lambda:valuechange(self))
-    self.gridLayout.addWidget(self.cardistry_ivl,r,1,1,1)
+    # self.cardistry_ivl=QtWidgets.QSpinBox(self.tab)
+    # self.cardistry_ivl.setMinimum(1)
+    # self.cardistry_ivl.setMaximum(999)
+    # self.cardistry_ivl.setSingleStep(1)
+    # self.cardistry_ivl.valueChanged.connect(lambda:valuechange(self))
+    # self.gridLayout.addWidget(self.cardistry_ivl,r,1,1,1)
 
     self.cardistry_filter=QtWidgets.QCheckBox(self.tab)
     self.cardistry_filter.setText(_('count cards in filter decks?'))
@@ -109,8 +109,8 @@ def dconfsetupUi(self, Dialog):
 def loadConf(self):
     lim=self.conf.get("young_card_limit", 0)
     self.form.young_card_limit.setValue(lim)
-    lim=self.conf.get("cardistry_ivl", 21)
-    self.form.cardistry_ivl.setValue(lim)
+    # lim=self.conf.get("cardistry_ivl", 21)
+    # self.form.cardistry_ivl.setValue(lim)
     cb=self.conf.get("cardistry_filter", 0)
     self.form.cardistry_filter.setCheckState(cb)
     valuechange(self.form)
@@ -119,7 +119,7 @@ def loadConf(self):
 def saveConf(self):
     valuechange(self.form)
     self.conf['young_card_limit']=self.form.young_card_limit.value()
-    self.conf['cardistry_ivl']=self.form.cardistry_ivl.value()
+    # self.conf['cardistry_ivl']=self.form.cardistry_ivl.value()
     self.conf['cardistry_filter']=self.form.cardistry_filter.checkState()
 
 
