@@ -3,6 +3,10 @@
 # Cardistry
 Dynamically Adjust New Cards
 
+## disable_addon:
+true or false (lower cased letters).  
+Disable this addon to peek at the actual review count without restarting anki.
+
 ## matured_ivl:
 All intervals below this value is a young card.  
 A good number to set is 21 or 100.  

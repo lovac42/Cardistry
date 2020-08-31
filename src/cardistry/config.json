@@ -1,4 +1,5 @@
 {
+    "disable_addon": false,
 	"scan_options": {
         "matured_ivl": 21,
         "scan_days": 5,

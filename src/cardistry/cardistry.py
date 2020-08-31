@@ -10,11 +10,15 @@ from anki.utils import ids2str
 
 from .lib.com.lovac42.anki.version import ANKI20
 from .utils import getYoungCardCnt
+from .setting import settings
 
 
 def deckNewLimitSingle(sched, d, _old):
     newMax=_old(sched,d)
     if d['dyn'] or mw.state == "sync":
+        return newMax
+
+    if settings.conf.get("disable_addon", False):
         return newMax
 
     c=sched.col.decks.confForDid(d['id'])
