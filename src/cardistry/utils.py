@@ -12,7 +12,7 @@ def getYoungCardCnt(did):
     "count lrn or burried only, no suspended"
 
     opts = settings.conf.get("scan_options", {})
-    sd = opts.get("scan_days", 5)
+    sd = opts.get("scan_days", 5) - 1 #reduce by 1 to include today
     scan_days = mw.col.sched.today + sd
     scan_ease = opts.get("scan_ease", 4000)
     matured_ivl = opts.get("matured_ivl", 21)

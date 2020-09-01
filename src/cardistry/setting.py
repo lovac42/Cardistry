@@ -30,7 +30,7 @@ class Settings:
         se = opts.get("scan_ease", 4000)
         ivl = opts.get("matured_ivl", 21)
 
-        opts["scan_days"] = max(0, sd)
+        opts["scan_days"] = max(1, sd)
         opts["scan_ease"] = max(1300, se)
         opts["matured_ivl"] = max(1, ivl)
         self.conf.set("scan_options", opts)
