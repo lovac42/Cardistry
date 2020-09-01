@@ -16,11 +16,27 @@ class Settings:
     def __init__(self):
         self.conf = Config(ADDON_NAME)
 
-        addHook(ADDON_NAME + '.configLoaded', self._refresh)
-        addHook(ADDON_NAME + '.configUpdated', self._refresh)
+        addHook(ADDON_NAME + '.configLoaded', self.onConfig)
+        addHook(ADDON_NAME + '.configUpdated', self.onConfig)
 
 
-    def _refresh(conf):
+    def onConfig(self):
+        self.checkOptions()
+        self._refresh()
+
+    def checkOptions(self):
+        opts = self.conf.get("scan_options", {})
+        sd = opts.get("scan_days", 5)
+        se = opts.get("scan_ease", 4000)
+        ivl = opts.get("matured_ivl", 21)
+
+        opts["scan_days"] = max(0, sd)
+        opts["scan_ease"] = max(1300, se)
+        opts["matured_ivl"] = max(1, ivl)
+        self.conf.set("scan_options", opts)
+
+
+    def _refresh(self):
         "Reset review count after addon config is loaded"
         mw.reset(True)
 
