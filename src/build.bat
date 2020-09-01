@@ -16,8 +16,8 @@ move checksum.md5 %REPO%\checksum.md5
 
 cd %REPO%
 
-quick_manifest.exe "Cardistry: Dynamically Adjust New Cards" "%PACKID%" >%REPO%\manifest.json
+quick_manifest.exe "Cardistry: Dynamically Adjust New Cards" "%PACKID%" >manifest.json
 %ZIP% ../%REPO%_v%VERSION%_Anki21.ankiaddon *
 
-quick_manifest.exe "Cardistry: Dynamically Adjust New Cards" "%REPO%" >%REPO%\manifest.json
+quick_manifest.exe "Cardistry: Dynamically Adjust New Cards" "%REPO%" >manifest.json
 %ZIP% ../%REPO%_v%VERSION%_CCBC.adze *
