@@ -13,6 +13,7 @@ from aqt.qt import *
 
 from .lib.com.lovac42.anki.version import ANKI20, CCBC
 from .utils import getYoungCardCnt, getNewCardCnt
+from .setting import settings
 
 if ANKI20 or CCBC:
     from PyQt4 import QtCore, QtGui as QtWidgets
@@ -46,8 +47,13 @@ def valuechange(self):
             cmin=self.cardistry_min.value()
             cpd=min(pLim,npd,max(0,cmin,lim-yCnt))
 
+            opts = settings.conf.get("scan_options", {})
+            days = opts.get("scan_days", 5)
+
+            newPerDay = (cpd+yCnt)//days + 1
+            cnt="(~%d cards a day, %d outstanding)"%(newPerDay,yCnt)
+
             d2g=nCnt//(cpd or 1)
-            cnt="(%d young/lrn outstanding)"%yCnt
             msg="(%d per day, ~%d days to go)"%(cpd,d2g or 1)
         else:
             cnt="Done! or is a parent deck"

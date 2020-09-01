@@ -2,7 +2,7 @@
 set ZIP=C:\PROGRA~1\7-Zip\7z.exe a -tzip -y -r
 set REPO=cardistry
 set PACKID=1535078906
-set VERSION=0.3.1
+set VERSION=0.3.2
 
 
 echo %VERSION% >%REPO%\VERSION
