@@ -35,7 +35,6 @@ def valuechange(self):
     lim=self.young_card_limit.value()
     if lim:
         cur=mw.col.decks.current()
-        # ivl=self.cardistry_ivl.value()
         # fil=self.cardistry_filter.checkState()
         yCnt=getYoungCardCnt(cur['id'])
 
@@ -44,16 +43,18 @@ def valuechange(self):
             nCnt=getNewCardCnt(cur['id'])
             npd=self.newPerDay.value()
 
-            cpd=min(pLim,npd,max(0,lim-yCnt))
+            cmin=self.cardistry_min.value()
+            cpd=min(pLim,npd,max(0,cmin,lim-yCnt))
+
             d2g=nCnt//(cpd or 1)
             msg="(%d per day, ~%d days to go, %d young/lrn)"%(cpd,d2g or 1,yCnt)
         else:
             msg="Done! or is a parent deck"
 
-        # self.cardistry_ivl.setDisabled(False)
+        self.cardistry_min.setDisabled(False)
         # self.cardistry_filter.setDisabled(False)
-    # else:
-        # self.cardistry_ivl.setDisabled(True)
+    else:
+        self.cardistry_min.setDisabled(True)
         # self.cardistry_filter.setDisabled(True)
     self.young_card_msg.setText(_(msg))
 
@@ -80,15 +81,15 @@ def dconfsetupUi(self, Dialog):
 
     r+=1
     label=QtWidgets.QLabel(self.tab)
-    label.setText(_("Mature IVL:"))
+    label.setText(_("Do at least:"))
     self.gridLayout.addWidget(label,r,0,1,1)
 
-    # self.cardistry_ivl=QtWidgets.QSpinBox(self.tab)
-    # self.cardistry_ivl.setMinimum(1)
-    # self.cardistry_ivl.setMaximum(999)
-    # self.cardistry_ivl.setSingleStep(1)
-    # self.cardistry_ivl.valueChanged.connect(lambda:valuechange(self))
-    # self.gridLayout.addWidget(self.cardistry_ivl,r,1,1,1)
+    self.cardistry_min=QtWidgets.QSpinBox(self.tab)
+    self.cardistry_min.setMinimum(0)
+    self.cardistry_min.setMaximum(999)
+    self.cardistry_min.setSingleStep(1)
+    self.cardistry_min.valueChanged.connect(lambda:valuechange(self))
+    self.gridLayout.addWidget(self.cardistry_min,r,1,1,1)
 
     # self.cardistry_filter=QtWidgets.QCheckBox(self.tab)
     # self.cardistry_filter.setText(_('count cards in filter decks?'))
@@ -99,8 +100,8 @@ def dconfsetupUi(self, Dialog):
 def loadConf(self):
     lim=self.conf.get("young_card_limit", 0)
     self.form.young_card_limit.setValue(lim)
-    # lim=self.conf.get("cardistry_ivl", 21)
-    # self.form.cardistry_ivl.setValue(lim)
+    lim=self.conf.get("cardistry_min", 0)
+    self.form.cardistry_min.setValue(lim)
     # cb=self.conf.get("cardistry_filter", 0)
     # self.form.cardistry_filter.setCheckState(cb)
     valuechange(self.form)
@@ -109,7 +110,7 @@ def loadConf(self):
 def saveConf(self):
     valuechange(self.form)
     self.conf['young_card_limit']=self.form.young_card_limit.value()
-    # self.conf['cardistry_ivl']=self.form.cardistry_ivl.value()
+    self.conf['cardistry_min']=self.form.cardistry_min.value()
     # self.conf['cardistry_filter']=self.form.cardistry_filter.checkState()
 
 
