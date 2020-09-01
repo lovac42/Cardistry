@@ -11,3 +11,5 @@ Please note that parent's new card limit must be larger than child's subdeck lim
 Enable using deck menu options.  
 
 <img src="https://github.com/lovac42/Cardistry/blob/master/screenshots/deckmenu.png?raw=true">
+
+<img src="https://github.com/lovac42/Cardistry/blob/master/screenshots/forecast.png?raw=true">
