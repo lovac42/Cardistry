@@ -26,9 +26,7 @@ def deckNewLimitSingle(sched, d, _old):
     if not youngMax or not newMax:
         return newMax
 
-    # incFilter=c.get("cardistry_filter", 0)
     youngCnt=getYoungCardCnt(d['id'])
-
     paddingCnt=max(
         0,
         youngMax-youngCnt-d['newToday'][1],
