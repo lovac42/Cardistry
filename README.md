@@ -13,3 +13,7 @@ Enable using deck menu options.
 <img src="https://github.com/lovac42/Cardistry/blob/master/screenshots/deckmenu.png?raw=true">
 
 <img src="https://github.com/lovac42/Cardistry/blob/master/screenshots/forecast.png?raw=true">
+
+
+## Bug warnings:
+On later version of Anki ~2.1.33, you may get a warning: `bug: fillNew()`. This is not a bug. You are receiving this warning because this addon cutoff and prevented the reviewer from doing any more cards. There isn't an easy way to prevent or change this warning message... Given how Anki is coded...
